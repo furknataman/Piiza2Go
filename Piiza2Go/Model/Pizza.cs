@@ -6,6 +6,7 @@ namespace Piiza2Go.Model
 {
     public class Pizza
     {
+        //merhaba
         //Malzemeler
         public List<Malzeme> Malzemeler { get; set; }
         //Hamur
