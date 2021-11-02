@@ -6,7 +6,6 @@ namespace Piiza2Go.Model
 {
     public class Pizza
     {
-        //merhaba
         //Malzemeler
         public List<Malzeme> Malzemeler { get; set; }
         //Hamur
@@ -24,6 +23,8 @@ namespace Piiza2Go.Model
             {
                 int calculatedPrice = 1;
                 //hesaplacak fiyat hakkında kodlar.
+                //biraz daha kod
+                //biraz da refactor
                 return calculatedPrice;
             }
         }
