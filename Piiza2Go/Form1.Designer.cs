@@ -280,6 +280,7 @@ namespace Piiza2Go
             this.lstBoxSiparis.Name = "lstBoxSiparis";
             this.lstBoxSiparis.Size = new System.Drawing.Size(199, 544);
             this.lstBoxSiparis.TabIndex = 14;
+            this.lstBoxSiparis.SelectedIndexChanged += new System.EventHandler(this.lstBoxSiparis_SelectedIndexChanged);
             // 
             // lstBoxTezgah
             // 

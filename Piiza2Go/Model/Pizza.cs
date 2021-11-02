@@ -23,6 +23,7 @@ namespace Piiza2Go.Model
             get
             {
                 int calculatedPrice = 1;
+                //hesaplacak fiyat hakkında kodlar.
                 return calculatedPrice;
             }
         }

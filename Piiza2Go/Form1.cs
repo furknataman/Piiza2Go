@@ -141,6 +141,11 @@ namespace Piiza2Go
             
 
         }
+
+        private void lstBoxSiparis_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
