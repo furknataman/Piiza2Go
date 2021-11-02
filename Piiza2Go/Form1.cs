@@ -8,13 +8,9 @@ namespace Piiza2Go
     public partial class Form1 : Form
     {
         Pizza pizza;
-        int toplamFiyat;
-        int eski = 0;
-        int fark = 0;
-        int gunlukkar = 0;
         List<Pizza> siparişTablosu = new List<Pizza>();
         List<Pizza> tezgah = new List<Pizza>();
-       
+
 
         public Form1()
         {
@@ -24,16 +20,10 @@ namespace Piiza2Go
             InitializeComponent();
 
             pizza = new Pizza();
-            pizza.Malzemeler = new List<Malzeme>();
 
-            Malzeme mozelMalzemesi = new Malzeme();
-            mozelMalzemesi.Isim = chkMozeralla.Text;
-            mozelMalzemesi.Fiyat = Convert.ToInt32(chkMozeralla.Tag);
-            lblToplam.Text = Convert.ToString(chkMozeralla.Tag);
-            pizza.Malzemeler.Add(mozelMalzemesi);
-            toplamFiyat = Convert.ToInt32(chkMozeralla.Tag);
             lstBoxMalzemeler.Items.Add("Mozeralla");
 
+            UpdatePrice();
         }
         private void chkMalzeme_CheckedChanged(object sender, EventArgs e)
         {
@@ -45,8 +35,6 @@ namespace Piiza2Go
                 Malzeme eklenecekMalzeme = new Malzeme();
                 eklenecekMalzeme.Isim = chkMalzeme.Text;
                 eklenecekMalzeme.Fiyat = Convert.ToInt32(chkMalzeme.Tag);
-                toplamFiyat = toplamFiyat + eklenecekMalzeme.Fiyat;
-                lblToplam.Text = Convert.ToString(toplamFiyat);
                 pizza.Malzemeler.Add(eklenecekMalzeme);
             }
             else
@@ -61,21 +49,18 @@ namespace Piiza2Go
                         break;
                     }
                 }
-                toplamFiyat = toplamFiyat - silinecekMalzeme.Fiyat;
-                lblToplam.Text = toplamFiyat.ToString();
                 pizza.Malzemeler.Remove(silinecekMalzeme);
             }
+
+            UpdatePrice();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            int yeni = trackBar1.Value;
+            int yeni = trcSosSeviyesi.Value;
             pizza.Sos = yeni;
 
-            fark = yeni - eski;
-            toplamFiyat = toplamFiyat + fark;
-            lblToplam.Text = toplamFiyat.ToString();
-            eski = yeni;
+            UpdatePrice();
         }
         private void hamurradio_CheckedChanged(object sender, EventArgs e)
         {
@@ -92,38 +77,22 @@ namespace Piiza2Go
             pizza.Boyut = (Boyutlar)cmbBoyut.SelectedIndex;
         }
 
-        
+
 
         private void btnSiparisVer_Click(object sender, EventArgs e)
         {
-            Pizza eklecekPizza = new Pizza();
-            eklecekPizza.Boyut = pizza.Boyut;
-            eklecekPizza.Hamur = pizza.Hamur;
-            eklecekPizza.Malzemeler = pizza.Malzemeler;
-            eklecekPizza.SiparisTarihi = DateTime.Now;
-            eklecekPizza.Sos = pizza.Sos;
+            Pizza eklenecekPizza = Helper.CreateDeepCopy(pizza);
+            eklenecekPizza.SiparisTarihi = DateTime.Now;
+            
+            siparişTablosu.Add(eklenecekPizza);
 
-            //eklecekPizza = Helper.CreateDeepCopy(pizza);
-
-            siparişTablosu.Add(eklecekPizza);
-
-            lstBoxSiparis.Items.Add(cmbBoyut.Text+ " " +" "+ eklecekPizza.Hamur+" "+ toplamFiyat.ToString()+"₺");
-
-            //"Küçük İnce Az Soslu - 24₺";
-
-            //foreach (var malzeme in eklecekPizza.Malzemeler)
-            //{
-            //    lstBoxSiparis.Items.Add(malzeme.Isim);
-            //}
+            lstBoxSiparis.Items.Add(eklenecekPizza.ReadableName);
 
             CleanOrder();
 
-            gunlukkar = gunlukkar + toplamFiyat;
-            toplamFiyat = 0;
-            toplamFiyat = Convert.ToInt32(chkMozeralla.Tag);
-            lblToplam.Text = toplamFiyat.ToString();
+            UpdatePrice();
+
             lstBoxMalzemeler.Items.Add("Mozeralla");
-            
         }
 
         private void CleanOrder()
@@ -133,18 +102,61 @@ namespace Piiza2Go
             chkPastirma.Checked = false;
             chkSucuk.Checked = false;
             chkTursu.Checked = false;
+
+            trcSosSeviyesi.Value = 1;
+            cmbBoyut.SelectedIndex = 0;
+
+            radioKalin.Checked = false;
+            radioOrta.Checked = false;
+            radioInce.Checked = false;
+
             lstBoxMalzemeler.Items.Clear();
+        }
+
+        private void UpdatePrice()
+        {
+            lblToplam.Text = pizza.ToplamFiyat.ToString();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            Pizza placeholderPizza = new Pizza();
             
+            foreach (Pizza item in siparişTablosu)
+            {
+                if (item.SiparisTarihi.AddSeconds(5) < DateTime.Now && !tezgah.Contains(item))
+                {
+                    placeholderPizza = item;
+                    tezgah.Add(placeholderPizza);
+                }
+            }
 
+            siparişTablosu.Remove(placeholderPizza);
+            
+            UpdateOrderTable();
+            UpdateTezgahTable();
         }
 
         private void lstBoxSiparis_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void UpdateOrderTable()
+        {
+            lstBoxSiparis.Items.Clear();
+            foreach (Pizza order in siparişTablosu)
+            {
+                lstBoxSiparis.Items.Add(order.ReadableName);
+            }
+        }
+        private void UpdateTezgahTable()
+        {
+            lstBoxTezgah.Items.Clear();
+            foreach (Pizza order in tezgah)
+            {
+                lstBoxTezgah.Items.Add(order.ReadableName);
+            }
         }
     }
 }

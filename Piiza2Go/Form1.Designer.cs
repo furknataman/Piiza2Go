@@ -32,7 +32,7 @@ namespace Piiza2Go
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tadioInce = new System.Windows.Forms.RadioButton();
+            this.radioInce = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbBoyut = new System.Windows.Forms.ComboBox();
             this.chkMantar = new System.Windows.Forms.CheckBox();
@@ -41,7 +41,7 @@ namespace Piiza2Go
             this.chkMisir = new System.Windows.Forms.CheckBox();
             this.chkPastirma = new System.Windows.Forms.CheckBox();
             this.chkMozeralla = new System.Windows.Forms.CheckBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trcSosSeviyesi = new System.Windows.Forms.TrackBar();
             this.label5 = new System.Windows.Forms.Label();
             this.radioOrta = new System.Windows.Forms.RadioButton();
             this.radioKalin = new System.Windows.Forms.RadioButton();
@@ -56,10 +56,9 @@ namespace Piiza2Go
             this.lstBoxMalzemeler = new System.Windows.Forms.ListBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.saat = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.lblsaat = new System.Windows.Forms.Label();
+            this.tmrZaman = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.trcSosSeviyesi)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -80,18 +79,18 @@ namespace Piiza2Go
             this.label2.TabIndex = 1;
             this.label2.Text = "Boyut seçiniz";
             // 
-            // tadioInce
+            // radioInce
             // 
-            this.tadioInce.AutoSize = true;
-            this.tadioInce.Location = new System.Drawing.Point(26, 284);
-            this.tadioInce.Name = "tadioInce";
-            this.tadioInce.Size = new System.Drawing.Size(47, 19);
-            this.tadioInce.TabIndex = 3;
-            this.tadioInce.TabStop = true;
-            this.tadioInce.Tag = "0";
-            this.tadioInce.Text = "İnce";
-            this.tadioInce.UseVisualStyleBackColor = true;
-            this.tadioInce.CheckedChanged += new System.EventHandler(this.hamurradio_CheckedChanged);
+            this.radioInce.AutoSize = true;
+            this.radioInce.Location = new System.Drawing.Point(26, 284);
+            this.radioInce.Name = "radioInce";
+            this.radioInce.Size = new System.Drawing.Size(47, 19);
+            this.radioInce.TabIndex = 3;
+            this.radioInce.TabStop = true;
+            this.radioInce.Tag = "0";
+            this.radioInce.Text = "İnce";
+            this.radioInce.UseVisualStyleBackColor = true;
+            this.radioInce.CheckedChanged += new System.EventHandler(this.hamurradio_CheckedChanged);
             // 
             // label4
             // 
@@ -195,16 +194,16 @@ namespace Piiza2Go
             this.chkMozeralla.UseVisualStyleBackColor = true;
             this.chkMozeralla.CheckedChanged += new System.EventHandler(this.chkMalzeme_CheckedChanged);
             // 
-            // trackBar1
+            // trcSosSeviyesi
             // 
-            this.trackBar1.Location = new System.Drawing.Point(26, 191);
-            this.trackBar1.Maximum = 3;
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(171, 45);
-            this.trackBar1.TabIndex = 10;
-            this.trackBar1.Value = 1;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trcSosSeviyesi.Location = new System.Drawing.Point(26, 191);
+            this.trcSosSeviyesi.Maximum = 3;
+            this.trcSosSeviyesi.Minimum = 1;
+            this.trcSosSeviyesi.Name = "trcSosSeviyesi";
+            this.trcSosSeviyesi.Size = new System.Drawing.Size(171, 45);
+            this.trcSosSeviyesi.TabIndex = 10;
+            this.trcSosSeviyesi.Value = 1;
+            this.trcSosSeviyesi.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // label5
             // 
@@ -340,43 +339,33 @@ namespace Piiza2Go
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(875, 18);
+            this.label10.Location = new System.Drawing.Point(815, 18);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(32, 15);
             this.label10.TabIndex = 17;
             this.label10.Text = "Saat:";
             // 
-            // saat
+            // lblsaat
             // 
-            this.saat.AutoSize = true;
-            this.saat.Location = new System.Drawing.Point(913, 18);
-            this.saat.Name = "saat";
-            this.saat.Size = new System.Drawing.Size(34, 15);
-            this.saat.TabIndex = 19;
-            this.saat.Text = "00:00";
+            this.lblsaat.AutoSize = true;
+            this.lblsaat.Location = new System.Drawing.Point(878, 18);
+            this.lblsaat.Name = "lblsaat";
+            this.lblsaat.Size = new System.Drawing.Size(34, 15);
+            this.lblsaat.TabIndex = 19;
+            this.lblsaat.Text = "00:00";
             // 
-            // timer1
+            // tmrZaman
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(70, 414);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.tmrZaman.Enabled = true;
+            this.tmrZaman.Interval = 1000;
+            this.tmrZaman.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(998, 638);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.saat);
+            this.Controls.Add(this.lblsaat);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -388,7 +377,7 @@ namespace Piiza2Go
             this.Controls.Add(this.btnSiparisVer);
             this.Controls.Add(this.lblToplam);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.trcSosSeviyesi);
             this.Controls.Add(this.chkPastirma);
             this.Controls.Add(this.chkMisir);
             this.Controls.Add(this.chkSucuk);
@@ -400,12 +389,12 @@ namespace Piiza2Go
             this.Controls.Add(this.label4);
             this.Controls.Add(this.radioKalin);
             this.Controls.Add(this.radioOrta);
-            this.Controls.Add(this.tadioInce);
+            this.Controls.Add(this.radioInce);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trcSosSeviyesi)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,7 +404,7 @@ namespace Piiza2Go
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RadioButton tadioInce;
+        private System.Windows.Forms.RadioButton radioInce;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbBoyut;
         private System.Windows.Forms.CheckBox chkMantar;
@@ -424,7 +413,7 @@ namespace Piiza2Go
         private System.Windows.Forms.CheckBox chkMisir;
         private System.Windows.Forms.CheckBox chkPastirma;
         private System.Windows.Forms.CheckBox chkMozeralla;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trcSosSeviyesi;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RadioButton radioOrta;
         private System.Windows.Forms.RadioButton radioKalin;
@@ -439,9 +428,8 @@ namespace Piiza2Go
         private System.Windows.Forms.ListBox lstBoxMalzemeler;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label saat;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblsaat;
+        private System.Windows.Forms.Timer tmrZaman;
     }
 }
 

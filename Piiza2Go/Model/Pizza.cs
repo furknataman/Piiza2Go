@@ -6,6 +6,7 @@ namespace Piiza2Go.Model
 {
     public class Pizza
     {
+
         //Malzemeler
         public List<Malzeme> Malzemeler { get; set; }
         //Hamur
@@ -16,19 +17,22 @@ namespace Piiza2Go.Model
         public int Sos { get; set; }
         //ToplamFiyat
         public DateTime SiparisTarihi { get; set; }
-
         public int ToplamFiyat
         {
             get
             {
-                int calculatedPrice = 1;
-                //hesaplacak fiyat hakkında kodlar.
-                //biraz daha kod
-                //biraz da refactor
+                int calculatedPrice = 0;
+
+                foreach (Malzeme malzeme in Malzemeler)
+                {
+                    calculatedPrice += malzeme.Fiyat;
+                }
+
+                calculatedPrice += Sos;
+
                 return calculatedPrice;
             }
         }
-
         public string ReadableName
         {
             get
@@ -79,9 +83,19 @@ namespace Piiza2Go.Model
                         readable += " Bol Soslu";
                         break;
                 }
-
+                readable += " " + ToplamFiyat.ToString() + "₺";
                 return readable;
             }
+        }
+
+        public Pizza()
+        {
+            Malzemeler = new List<Malzeme>();
+            Malzemeler.Add(new Malzeme()
+            {
+                Isim = "Mozerella",
+                Fiyat = 2
+            });
         }
     }
 }
